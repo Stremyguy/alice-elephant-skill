@@ -45,11 +45,13 @@ def handle_dialog(req: dict, res: dict) -> None:
         res["response"]["buttons"] = get_suggests(user_id)
         return
 
-    if req["request"]["original_utterance"].lower() in [
+    if req["request"]["original_utterance"].lower().strip() in [
         "ладно",
         "куплю",
         "покупаю",
-        "хорошо"
+        "хорошо",
+        "я покупаю",
+        "я куплю"
     ]:
         res["response"]["text"] = "Слона можно найти на Яндекс.Маркете!"
         res["response"]["end_session"] = True
