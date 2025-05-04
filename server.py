@@ -7,9 +7,11 @@ logging.basicConfig(level=logging.INFO)
 
 sessionStorage = {}
 
-
-@app.route("/post", methods=["POST"])
+@app.route("/", methods=["GET", "POST"])
 def main() -> dict:
+    if request.method == "GET":
+        return "Server is running!", 200
+    
     logging.info(f"Request: {request.json!r}")
     
     response = {
@@ -19,8 +21,6 @@ def main() -> dict:
             "end_session": False
         }
     }
-    
-    print(type(request.json), type(response))
     
     handle_dialog(request.json, response)
     
@@ -55,8 +55,7 @@ def handle_dialog(req: dict, res: dict) -> None:
         res["response"]["end_session"] = True
         return
     
-    res["response"]["text"] = \
-        "Все говорят '{}', а ты купи слона!".format(req["request"]["original_utterance"])
+    res["response"]["text"] = f"Все говорят '{req['request']['original_utterance']}', а ты купи слона!"
     res["response"]["buttons"] = get_suggests(user_id)
     
 
@@ -82,4 +81,4 @@ def get_suggests(user_id: int) -> list:
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=3000)
