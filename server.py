@@ -65,7 +65,7 @@ def handle_dialog(req: dict, res: dict) -> None:
         "я покупаю",
         "я куплю"
     ]:
-        res["response"]["text"] = f"{current_item.capitalize()} можно найти на Яндекс.Маркете!"
+        res["response"]["text"] = f"{current_item.capitalize()}а можно найти на Яндекс.Маркете!"
         res["response"]["end_session"] = True
         current_item_id += 1
         return
